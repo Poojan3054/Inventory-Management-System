@@ -7,3 +7,4 @@ export default Yup.object({
   supplier_id: Yup.number().required("Supplier required"),
   category_id: Yup.number().required("Category required"),
 });
+
