@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../api/axios'; 
-import { 
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  PieChart, Pie, Cell 
-} from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 const COLORS = ['#0d6efd', '#198754', '#ffc107'];
 
@@ -16,7 +13,6 @@ const Dashboard: React.FC = () => {
     const fetchStats = async () => {
       try {
         const response = await api.get('/dashboard-stats/');
-        // બેકએન્ડ ડેટા સ્ટ્રક્ચર ચેક કરીને સેટ કરો
         const data = response.data.data ? response.data.data : response.data;
         setStats(data);
       } catch (error) {
@@ -40,7 +36,6 @@ const Dashboard: React.FC = () => {
     <div className="container-fluid min-vh-100 p-4" style={{ backgroundColor: '#1a1d20', color: 'white' }}>
       <h2 className="fw-bold mb-5">📊 INVENTORY ANALYTICS</h2>
 
-      {/* --- આ સેક્શન આંકડા બતાવશે (કાર્ડ્સ) --- */}
       <div className="row g-4 mb-5">
         <div className="col-md-4">
           <div className="card border-0 shadow-lg p-4 bg-white text-dark rounded-4">
@@ -62,7 +57,6 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* --- ચાર્ટ અને બટન્સનું સેક્શન --- */}
       <div className="card border-0 shadow-lg p-4 bg-white text-dark rounded-4">
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h5 className="fw-bold m-0">Stock Distribution Overview</h5>
