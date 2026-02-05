@@ -1,0 +1,17 @@
+# --- Python & Django ---
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.log
+
+# --- PostgreSQL & Secrets ---
+.env
+*.sql
+*.dump
+
+# --- Django Assets ---
+db.sqlite3
+media/
+staticfiles/
+backend_app/__pycache__/
