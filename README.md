@@ -28,11 +28,17 @@ This repository contains:
 
 ## 🚀 Installation & Setup
 
-### 1. Backend (Django)
 ```bash
+# 1. Backend Setup
 cd inventory
 python -m venv venv
 .\venv\Scripts\activate
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
+
+# 2. Frontend Setup
+cd ..
+cd inventory-ui
+npm install axios formik yup react-toastify
+npm start
