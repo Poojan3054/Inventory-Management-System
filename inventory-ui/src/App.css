@@ -1,0 +1,109 @@
+/* 1. Professional Background and Core Styles */
+body {
+  margin: 0;
+  padding: 0;
+  background: #f0f2f5; 
+  background: linear-gradient(to right, #8fa7be, #41d1e7); 
+  min-height: 100vh;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  /* Keep scrollbar visible to prevent layout shift when modals open */
+  overflow-y: scroll;
+}
+
+/* 2. Container and Cards Styles */
+.container {
+  padding-top: 30px;
+}
+
+.card {
+  background: #ffffff !important;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Disable hover transform for table cards to maintain stability */
+.card-table {
+  transition: none !important;
+  transform: none !important;
+}
+
+/* Header and Navbar Styles */
+header, .navbar {
+  background: #1a237e !important; 
+  color: white !important;
+  padding: 15px 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* 3. Button Styles */
+.btn-primary {
+  background-color: #1a237e !important;
+  border: none !important;
+  padding: 10px 20px !important;
+  font-weight: 500 !important;
+  border-radius: 8px !important;
+}
+
+.btn-primary:hover {
+  background-color: #0d47a1 !important;
+  transform: translateY(-1px);
+}
+
+/* 4. Form Controls and Input Styles */
+.form-control, .form-select {
+  border: 1px solid #ced4da !important;
+  border-radius: 8px !important;
+  padding: 12px !important;
+  box-shadow: none !important;
+}
+
+.form-control:focus {
+  border-color: #1a237e !important;
+  box-shadow: 0 0 0 0.2rem rgba(26, 35, 126, 0.15) !important;
+}
+
+/* 5. Layout Stability Fixes */
+
+/* Prevent page shifting when Bootstrap modal opens */
+body.modal-open {
+  padding-right: 0 !important;
+  overflow: hidden !important; 
+}
+
+/* Maintain a consistent minimum height for the list area */
+.table-responsive {
+  min-height: auto; 
+  max-height: 500px; 
+  background: white;
+  border-radius: 8px;
+}
+/* Modal backdrop with blur effect */
+.modal-backdrop {
+  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Pagination Component Styling */
+.pagination .page-link {
+  color: #1a237e;
+  border: none;
+  margin: 0 3px;
+  border-radius: 5px;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #1a237e !important;
+  border-color: #1a237e !important;
+  color: white !important;
+}
+
+.pagination .page-link:focus {
+  box-shadow: none;
+}
+
+/* Table Row Hover - Color change only to prevent layout jumping */
+.table.table-hover tbody tr:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.2s ease;
+}
