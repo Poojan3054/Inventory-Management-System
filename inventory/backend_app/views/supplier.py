@@ -7,7 +7,7 @@ class SupplierView(APIView):
     def get(self, request):
         # params from frontend
         page = int(request.query_params.get('page', 1))
-        limit = int(request.query_params.get('limit', 3))
+        limit = int(request.query_params.get('limit', 10))
         offset = (page - 1) * limit
 
         # passing parameters to service

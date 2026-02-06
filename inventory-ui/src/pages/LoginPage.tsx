@@ -11,13 +11,9 @@ export default function LoginPage() {
 
   const { showPassword, isLocked, secondsLeft } = ui;
 
-  // ---------------- TIMER LOGIC ----------------
-  // Controls the countdown when the account is in a locked state
   useEffect(() => {
-    // Exit if not locked or time has already run out
     if (!isLocked || secondsLeft <= 0) {
       if (isLocked && secondsLeft <= 0) {
-        // Unlock account and notify user via Toast
         setUi((u) => ({ ...u, isLocked: false }));
         toast.success("Account unlocked! Now you can enter your password and login.", {
           position: "top-center",
@@ -27,43 +23,40 @@ export default function LoginPage() {
       return;
     }
 
-    // Interval to decrement the secondsLeft every 1000ms
     const timer = setInterval(
       () => setUi((u) => ({ ...u, secondsLeft: u.secondsLeft - 1 })),
       1000
     );
 
-    // Cleanup interval on component unmount or state change
     return () => clearInterval(timer);
   }, [isLocked, secondsLeft]);
 
-  // ---------------- LOGIN HANDLER ----------------
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isLocked) return;
 
-    // Clear local storage to prevent session conflicts
     localStorage.clear();
 
     try {
       const { data } = await api.post("/login/", credentials);
-      console.log("Backend Response:", data);
       localStorage.setItem("access_token", data.access);
       localStorage.setItem("refresh_token", data.refresh);
 
-      // IMPORTANT: If your backend sends 'res_username', use data.res_username
-      // If backend maps it back to 'username', keep it as is.
       const displayName = data.res_username || data.username; 
       localStorage.setItem("username", displayName);
       
       const userRole = (data.role || "user").toLowerCase();
       localStorage.setItem("role", userRole); 
 
-      window.location.href = "/"; 
+      // Logic: Admin goes to Dashboard, Others to Home
+      if (userRole === "admin") {
+        window.location.href = "/dashboard";
+      } else {
+        window.location.href = "/"; 
+      }
     } catch (err: any) {
       const { status, data } = err.response || {};
 
-      // if status 403 and backend sends 'is_locked: true' then timer starts
       if (status === 403 && data?.is_locked) {
         setUi((u) => ({
           ...u,
@@ -77,11 +70,9 @@ export default function LoginPage() {
     }
   };
 
-  // ---------------- INPUT HANDLER ----------------
   const onChange = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) =>
     setCredentials((c) => ({ ...c, [key]: e.target.value }));
 
-  // ---------------- UI RENDERING ----------------
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">
       <ToastContainer position="top-center" autoClose={5000} />
@@ -130,7 +121,6 @@ export default function LoginPage() {
               isLocked ? "btn-secondary" : "btn-primary"
             }`}
           >
-            {/* Kept original button text as requested */}
             {isLocked ? "Account Locked" : "Sign In"}
           </button>
         </form>

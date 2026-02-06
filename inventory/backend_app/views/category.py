@@ -18,7 +18,7 @@ class CategoryListCreateView(APIView):
         List categories with pagination
         """
         page = int(request.query_params.get("page", 1))
-        limit = int(request.query_params.get("limit", 3))
+        limit = int(request.query_params.get("limit", 15))
         offset = (page - 1) * limit
 
         data = list_categories(limit=limit, offset=offset)

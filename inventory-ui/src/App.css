@@ -107,3 +107,25 @@ body.modal-open {
   background-color: #f8f9fa;
   transition: background-color 0.2s ease;
 }
+
+/* Card styling */
+.card {
+  transition: transform 0.3s ease;
+  border-radius: 20px !important;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Search bar styling */
+.form-control:focus {
+  box-shadow: 0 0 15px rgba(0,0,0,0.05);
+  border: none;
+}
+
+/* Color Palette */
+:root {
+  --primary-purple: #8e44ad;
+  --bg-light-blue: #f4f7fe;
+}

@@ -21,7 +21,7 @@ class ProductListCreateView(APIView):
         """
         try:
             page = int(request.query_params.get("page", 1))
-            limit = int(request.query_params.get("limit", 3))
+            limit = int(request.query_params.get("limit", 100))
 
             if page <= 0 or limit <= 0:
                 raise ValidationError("Page and Limit must be positive integers.")

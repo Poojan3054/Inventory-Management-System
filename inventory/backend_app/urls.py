@@ -2,7 +2,7 @@ from django.urls import path
 from backend_app.views.supplier import SupplierView
 from backend_app.views.category import *
 from backend_app.views.product import *
-from .views.auth_views import RegisterView, LoginView, RefreshTokenView,SendOTPView,ResetPasswordWithOTPView
+from .views.auth_views import RegisterView, LoginView, RefreshTokenView,SendOTPView,ResetPasswordWithOTPView,UserListView
 from .views.dashboard_views import DashboardStatsView
 
 urlpatterns = [
@@ -26,5 +26,7 @@ urlpatterns = [
     path('products/', ProductListCreateView.as_view()),
     path('products/<int:id>/', ProductUpdateDeleteView.as_view()),
 
+    path('users/', UserListView.as_view(), name='user-list'),
+    
     path('dashboard-stats/', DashboardStatsView.as_view(), name='dashboard-stats'),
 ]

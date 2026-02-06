@@ -1,10 +1,17 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import api from "../../api/axios";
 
-export default function SupplierForm({ onSuccess }: { onSuccess?: () => void }) {
+// Added supplier prop for editing
+export default function SupplierForm({ supplier, onSuccess }: { supplier?: any; onSuccess?: () => void }) {
   return (
     <Formik
-      initialValues={{ name: "", contact: "", created_by: "Admin" }}
+      // Dynamically set initial values based on whether we are editing or adding
+      initialValues={{ 
+        name: supplier?.name || "", 
+        contact: supplier?.contact || "", 
+        created_by: supplier?.created_by || "Admin" 
+      }}
+      enableReinitialize={true}
       validate={(values) => {
         const errors: any = {};       
         if (values.contact && !/^\d{10}$/.test(values.contact)) {
@@ -13,21 +20,27 @@ export default function SupplierForm({ onSuccess }: { onSuccess?: () => void }) 
         return errors;
       }}
       onSubmit={(values, { resetForm }) => {
-        api.post("/suppliers/", values).then(() => {
-          alert("Supplier added successfully");
+        const request = supplier 
+          ? api.put(`/suppliers/${supplier.id}/`, values) // Update
+          : api.post("/suppliers/", values); // Create
+
+        request.then(() => {
+          alert(supplier ? "Supplier updated successfully" : "Supplier added successfully");
           resetForm();
           if (onSuccess) onSuccess();
         }).catch(err => {
-          alert("Error adding supplier: " + (err.response?.data?.detail || "Something went wrong"));
+          alert("Operation failed: " + (err.response?.data?.detail || "Something went wrong"));
         });
       }}
     >
-      {({ setFieldValue, values }) => (
-        <Form>
-          <div className="mb-2">
+      {({ setFieldValue }) => (
+        <Form className="p-3">
+          <div className="mb-3">
+            <label className="form-label small fw-bold">Supplier Name</label>
             <Field name="name" className="form-control" placeholder="Supplier Name" required />
           </div>
-          <div className="mb-2">
+          <div className="mb-3">
+            <label className="form-label small fw-bold">Contact Number</label>
             <Field
               name="contact"
               type="text"
@@ -43,7 +56,9 @@ export default function SupplierForm({ onSuccess }: { onSuccess?: () => void }) 
             />
             <ErrorMessage name="contact" component="div" className="text-danger small" />
           </div>
-          <button type="submit" className="btn btn-primary w-100">Save Supplier</button>
+          <button type="submit" className="btn btn-warning w-100 fw-bold">
+            {supplier ? "Update Supplier" : "Save Supplier"}
+          </button>
         </Form>
       )}
     </Formik>

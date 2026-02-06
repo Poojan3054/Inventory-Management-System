@@ -1,17 +1,20 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useLocation } from "react-router-dom";
 import AppRoutes from "./routes/AppRoutes";
 import Navbar from "./components/layout/Navbar";
 
 function AppContent() {
-  // Check authentication status from LocalStorage
   const isAuthenticated = !!localStorage.getItem("access_token");
+  const location = useLocation();
+
+  // ડેશબોર્ડ માટે નેવબાર છુપાવવા માટે
+  const isDashboard = location.pathname === "/dashboard";
+  const showNavbar = isAuthenticated && !isDashboard;
 
   return (
     <>
-      {/* Show Navbar only if the user is logged in */}
-      {isAuthenticated && <Navbar />}       
-      {/* Apply Bootstrap container margin only for authenticated pages */}
-      <div className={isAuthenticated ? "container mt-3" : ""}>
+      {showNavbar && <Navbar />}      
+      {/* જો ડેશબોર્ડ હોય તો container કાઢી નાખવું જેથી full width મળે */}
+      <div className={showNavbar ? "container mt-3" : ""}>
         <AppRoutes />
       </div>
     </>
